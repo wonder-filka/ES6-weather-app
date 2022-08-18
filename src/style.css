@@ -1,40 +1,110 @@
+body {
+  background-image: url(../img/background.png) !important;
+}
+
 .conteiner {
   display: block;
   margin: 100px auto;
-  width: 60%;
+  width: 50%;
   padding: 50px;
   border: 1px solid black;
   border-radius: 15px;
+  font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+  box-shadow: -5px 12px 29px 6px rgba(0, 0, 0, 0.3);
+  background-color: rgba(255, 255, 255, 0.7);
 }
-h1,
-h2,
-h6 {
+
+.currentInfo h5 {
   text-align: center;
+  font-size: 14px;
 }
 
-h1 {
-  padding-top: 50px;
+.currentInfo h1 {
+  text-align: center;
+  font-family: "Changa One", sans-serif;
 }
 
-h6 {
-  color: grey;
+.currentInfo h4 {
+  text-align: center;
+  font-size: 16px;
+  text-decoration: underline;
 }
 
 .Emojii {
   font-size: 50px;
 }
 
-.cel_far {
-  color: black;
-  text-decoration: none;
-}
-
-.current {
-  margin-left: 10px;
-}
-
 #github {
   display: block;
   margin: 0 auto;
   text-align: center;
+}
+
+.currentInfo {
+  padding-top: 50px;
+  padding-bottom: 0px;
+}
+
+.currentBlock {
+  align-items: center;
+}
+
+#currentIcon {
+  text-align: right;
+  font-size: 100px;
+}
+
+#currentIcon img {
+  height: 1em;
+  margin-right: -30px;
+  margin-top: -20px;
+}
+
+.currentTemp {
+  text-align: center;
+  font-size: 64px;
+  margin-right: -30px;
+}
+
+#temp {
+}
+
+#units {
+  position: relative;
+  margin-left: -10px;
+}
+.cel_far {
+  text-align: left;
+  font-size: 20px;
+  vertical-align: text-top;
+  text-decoration: none;
+  color: black;
+}
+.moreInfo ul {
+  padding-left: 0px;
+  margin: 0 auto;
+}
+.moreInfo li {
+  text-align: left;
+  list-style: none;
+}
+
+.forecast {
+  text-align: center;
+  /* background-color: rgba(233, 244, 252, 0.5); */
+  padding: 30px;
+  /* border: 1px solid #ced4da; */
+  border-radius: 15px;
+}
+
+button#search.btn.btn-warning {
+  background-color: #f6ba53;
+  border: 1px solid #ced4da;
+  color: black;
+}
+
+button#current.btn.btn-warning {
+  background-color: white;
+  border: 1px solid #ced4da;
+  color: black;
 }
