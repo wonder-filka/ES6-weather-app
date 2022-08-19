@@ -52,7 +52,7 @@ function ShowTheTemperature(response) {
   let description = response.data.description;
   let humidity = response.data.currentConditions.humidity;
   let wind = response.data.currentConditions.windspeed;
-  let feelslike = response.data.currentConditions.feelslike;
+  let feelslike = Math.round(response.data.currentConditions.feelslike);
   Temp.innerHTML = temperature;
   currentDescription.innerHTML = description;
   h1.innerHTML = `${cityName}`;
@@ -63,10 +63,12 @@ function ShowTheTemperature(response) {
     "src",
     `img/${response.data.currentConditions.icon}.svg`
   );
+  console.log(response.data);
+  displayForecast(response);
 }
 
 function getCurrentInfo(event) {
-  event.preventDefault();
+  // event.preventDefault();
   navigator.geolocation.getCurrentPosition(getCurrentPosition);
 }
 
@@ -91,3 +93,46 @@ function formatToCell(event) {
   event.preventDefault();
   Temp.innerHTML = celsiusTemp;
 }
+
+function displayForecast(response) {
+  let forecastElement = document.querySelector("#forecast");
+  let forecast = response.data.days;
+  let forecastHTML = `<div class="row">`;
+
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 7 && index > 0) {
+      forecastHTML =
+        forecastHTML +
+        ` <div class="col dayForecast">
+            <div class="weekDay">${formatDay(forecastDay.datetimeEpoch)}</div>
+            <div>
+                <img src="img/${forecastDay.icon}.svg" class="dayIcon">
+            </div>
+            <div class="minMaxTemp">
+                <span id="min">${Math.round(
+                  forecastDay.tempmin
+                )}</span><span>/</span><span id="max">${Math.round(
+          forecastDay.tempmax
+        )}</span> <span>°</span>
+            </div>
+       </div>`;
+    }
+  });
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
+}
+
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  return days[day];
+}
+
+function search(city) {
+  let apiUrl = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?iconSet=icons2&unitGroup=metric&key=${newApi}&contentType=json`;
+  axios.get(apiUrl).then(ShowTheTemperature);
+}
+
+formatDay();
+search("London");
