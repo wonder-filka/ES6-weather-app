@@ -42,20 +42,19 @@ function getSearchInfo(event) {
   event.preventDefault();
   let apiUrl = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${inputInfo.value}?iconSet=icons2&unitGroup=metric&key=${newApi}&contentType=json`;
   axios.get(apiUrl).then(ShowTheTemperature);
+  let apiCity = `https://api.openweathermap.org/data/2.5/weather?q=${inputInfo.value}&appid=${apiKeyCity}`;
+  axios.get(apiCity).then(getCityName);
 }
 
 function ShowTheTemperature(response) {
   let temperature = Math.round(response.data.currentConditions.temp);
   celsiusTemp = temperature;
-  let cityName = response.data.timezone.split("/")[1];
-  let pics = response.data.currentConditions.icon;
   let description = response.data.description;
   let humidity = response.data.currentConditions.humidity;
   let wind = response.data.currentConditions.windspeed;
   let feelslike = Math.round(response.data.currentConditions.feelslike);
   Temp.innerHTML = temperature;
   currentDescription.innerHTML = description;
-  h1.innerHTML = `${cityName}`;
   currentHumidity.innerHTML = humidity;
   currentWind.innerHTML = wind;
   currentFeelslike.innerHTML = feelslike;
@@ -63,12 +62,12 @@ function ShowTheTemperature(response) {
     "src",
     `img/${response.data.currentConditions.icon}.svg`
   );
-  console.log(response.data);
+
   displayForecast(response);
 }
 
 function getCurrentInfo(event) {
-  // event.preventDefault();
+  event.preventDefault();
   navigator.geolocation.getCurrentPosition(getCurrentPosition);
 }
 
@@ -77,6 +76,8 @@ function getCurrentPosition(position) {
   let longitude = position.coords.longitude;
   let apiUrl = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${latitude},${longitude}?iconSet=icons2&unitGroup=metric&key=${newApi}`;
   axios.get(apiUrl).then(ShowTheTemperature);
+  let apiCity = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}5&lon=${longitude}&appid=${apiKeyCity}`;
+  axios.get(apiCity).then(getCityName);
 }
 
 function formatToCell(event) {
@@ -132,7 +133,17 @@ function formatDay(timestamp) {
 function search(city) {
   let apiUrl = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?iconSet=icons2&unitGroup=metric&key=${newApi}&contentType=json`;
   axios.get(apiUrl).then(ShowTheTemperature);
+  let apiKeyCity = "ba322d86c6e375290a924f7f5aba942e";
+  let apiCity = `https://api.openweathermap.org/data/2.5/weather?q=London&appid=${apiKeyCity}`;
+  axios.get(apiCity).then(getCityName);
 }
 
 formatDay();
 search("London");
+
+let apiKeyCity = "ba322d86c6e375290a924f7f5aba942e";
+
+function getCityName(response) {
+  console.log(response.data);
+  h1.innerHTML = `${response.data.name}`;
+}
