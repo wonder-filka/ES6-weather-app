@@ -3,7 +3,7 @@ let timeNow = document.querySelector(".currentInfo h5");
 let Temp = document.querySelector("span#temp");
 let inputSearch = document.querySelector(".input-group #search");
 let inputCurrent = document.querySelector(".input-group #current");
-let inputInfo = document.querySelector(".input-group #formControl");
+let inputInfo = document.querySelector(".input-group #city-input");
 let cuttentIcon = document.querySelector("#icon");
 let currentDescription = document.querySelector(".currentInfo h4");
 let currentHumidity = document.querySelector("#humidity");
@@ -15,6 +15,9 @@ let celsiusTemp = null;
 let now = new Date();
 let apiKey = "ba322d86c6e375290a924f7f5aba942e";
 let newApi = "DPDT2QJYWGH8EYB67YK2R8G99";
+let apiKeyCity = "ba322d86c6e375290a924f7f5aba942e";
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
 inputSearch.addEventListener("click", getSearchInfo);
 inputCurrent.addEventListener("click", getCurrentInfo);
 celsTemp.addEventListener("click", formatToCell);
@@ -141,9 +144,13 @@ function search(city) {
 formatDay();
 search("London");
 
-let apiKeyCity = "ba322d86c6e375290a924f7f5aba942e";
-
 function getCityName(response) {
   console.log(response.data);
   h1.innerHTML = `${response.data.name}`;
+}
+
+function handleSubmit(event) {
+  event.preventDefault();
+  let cityInputElement = document.querySelector("#city-input");
+  search(cityInputElement.value);
 }
